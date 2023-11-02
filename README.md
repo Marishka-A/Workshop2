@@ -49,17 +49,21 @@
 
   
 ```py
-import gspreadimport numpy as np
-gc = gspread.service_account(filename='unitydatascience2-cfc42e20a895.json')sh = gc.open("DataSciense")
-price = np.random.randint(1, 60, 10)mon = list(range(1,10))
-i = 0sum = 0
+import gspread
+import numpy as np
+gc = gspread.service_account(filename='unitydatascience2-cfc42e20a895.json')
+sh = gc.open("DataSciense")
+price = np.random.randint(1, 60, 10)
+mon = list(range(1,10))
+i = 0
+sum = 0
 while i <= len(mon):
     i += 1
     if i == 0:
         continue
     else:
-        if sum < 160: sum += price[i-1]
-        else: sum -= price[i-1]
+        if sum >= 160: sum -= 160
+        else: sum += price[i-1]
         sh.sheet1.update(('A' + str(i+1)), str(i))
         sh.sheet1.update(('B' + str(i+1)), str(price[i-1]))
         sh.sheet1.update(('C' + str(i+1)), str(sum))
